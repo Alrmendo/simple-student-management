@@ -1,0 +1,119 @@
+<!-- Content -->
+<div class="bg-white p-8 rounded-lg shadow-md">
+    <h1 class="text-3xl font-semibold text-[#A78BFA] mb-6">Tìm kiếm sinh viên</h1>
+    <form id="search-form" class="space-y-6">
+        <div>
+            <label for="search-input" class="block text-lg font-medium text-gray-700">Nhập Họ tên hoặc
+                MSSV</label>
+            <input type="text" id="search-input" placeholder="Ví dụ: Nguyễn Văn A hoặc 001"
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+    </form>
+</div>
+
+<!-- Search Results -->
+<div class="mt-10">
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">Kết quả tìm kiếm</h2>
+    <div class="overflow-x-auto">
+        <table class="table-auto w-full border-collapse bg-white rounded-lg shadow-lg overflow-hidden">
+            <thead class="bg-gray-300 text-black">
+                <tr>
+                    <th class="px-3 py-2 text-[15px] font-medium">MSSV</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Họ và tên</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Ngày sinh</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Giới tính</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Khoa</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Trình trạng</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Email</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">SĐT</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Khóa</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Chương trình</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Địa chỉ</th>
+                </tr>
+            </thead>
+            <tbody id="search-results-body">
+                <!-- Kết quả tìm kiếm -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    const searchInput = document.getElementById('search-input');
+    const searchResultsBody = document.getElementById('search-results-body');
+    const searchForm = document.getElementById('search-form');
+
+    searchForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+    });
+
+    // Tìm kiếm sinh viên từ Local Storage
+    searchInput.addEventListener('input', function () {
+        const query = searchInput.value.toLowerCase();
+        const students = JSON.parse(localStorage.getItem('students')) || [];
+
+        if (query === '') {
+            loadSearchResults();
+            return;
+        }
+
+        searchResultsBody.innerHTML = '';
+
+        const filteredStudents = students.filter(student =>
+            student.id.toLowerCase().includes(query) ||
+            student.name.toLowerCase().includes(query)
+        );
+
+        filteredStudents.forEach(student => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                    <td class="text-[13px] border px-3 py-2">${student.id}</td>
+                    <td class="text-[13px] border px-3 py-2">${student.name}</td>
+                    <td class="text-[13px] border px-3 py-2">${student.birthdate}</td>
+                    <td class="text-[13px] border px-3 py-2">${student.gender}</td>
+                    <td class="text-[13px] border px-3 py-2">${student.department}</td>
+                    <td class="text-[13px] border px-3 py-2">${student.status}</td>
+                    <td class="text-[13px] border px-3 py-2">${student.email}</td>
+                    <td class="text-[13px] border px-3 py-2">${student.phone}</td>
+                    <td class="text-[13px] border px-3 py-2">${student.course}</td>
+                    <td class="text-[13px] border px-3 py-2">${student.program}</td>
+                    <td class="text-[13px] border px-3 py-2">${student.address}</td>
+                `;
+            searchResultsBody.appendChild(row);
+        });
+
+        if (filteredStudents.length === 0) {
+            const noResultsRow = document.createElement('tr');
+            noResultsRow.innerHTML = `
+                    <td class="border px-3 py-2 text-center" colspan="11">Không tìm thấy kết quả</td>
+                `;
+            searchResultsBody.appendChild(noResultsRow);
+        }
+    });
+
+    // Hiển thị toàn bộ danh sách ban đầu
+    function loadSearchResults() {
+        const students = JSON.parse(localStorage.getItem('students')) || [];
+        searchResultsBody.innerHTML = '';
+
+        students.forEach(student => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                    <td class="text-[13px] border px-3 py-2">${student.id}</td>
+                    <td class="text-[13px] border px-3 py-2">${student.name}</td>
+                    <td class="text-[13px] border px-3 py-2">${student.birthdate}</td>
+                    <td class="text-[13px] border px-3 py-2">${student.gender}</td>
+                    <td class="text-[13px] border px-3 py-2">${student.department}</td>
+                    <td class="text-[13px] border px-3 py-2">${student.status}</td>
+                    <td class="text-[13px] border px-3 py-2">${student.email}</td>
+                    <td class="text-[13px] border px-3 py-2">${student.phone}</td>
+                    <td class="text-[13px] border px-3 py-2">${student.course}</td>
+                    <td class="text-[13px] border px-3 py-2">${student.program}</td>
+                    <td class="text-[13px] border px-3 py-2">${student.address}</td>
+                `;
+            searchResultsBody.appendChild(row);
+        });
+    }
+
+    window.onload = loadSearchResults;
+</script>

@@ -1,0 +1,116 @@
+<!-- Content -->
+<div class="bg-white p-7 rounded-lg shadow-md">
+    <h1 class="text-3xl font-semibold text-[#A78BFA] mb-6">Thêm sinh viên mới</h1>
+    <form id="add-student-form" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+            <label for="student-id" class="block text-lg font-medium text-gray-700">Mã số sinh viên</label>
+            <input type="text" id="student-id" placeholder="Nhập mã số sinh viên"
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        <div>
+            <label for="student-name" class="block text-lg font-medium text-gray-700">Họ và tên</label>
+            <input type="text" id="student-name" placeholder="Nhập họ và tên"
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        <div>
+            <label for="student-birthdate" class="block text-lg font-medium text-gray-700">Ngày tháng năm
+                sinh</label>
+            <input type="date" id="student-birthdate"
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        <div>
+            <label for="student-gender" class="block text-lg font-medium text-gray-700">Giới tính</label>
+            <select id="student-gender"
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <option value="">Chọn giới tính</option>
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+            </select>
+        </div>
+        <div>
+            <label for="student-department" class="block text-lg font-medium text-gray-700">Khoa</label>
+            <select id="student-department"
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <option value="">Chọn khoa</option>
+                <option value="Luật">Khoa Luật</option>
+                <option value="Tiếng Anh">Khoa Tiếng Anh thương mại</option>
+                <option value="Tiếng Nhật">Khoa Tiếng Nhật</option>
+                <option value="Tiếng Pháp">Khoa Tiếng Pháp</option>
+            </select>
+        </div>
+        <div>
+            <label for="student-status" class="block text-lg font-medium text-gray-700">Tình trạng sinh
+                viên</label>
+            <select id="student-status"
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <option value="">Chọn tình trạng</option>
+                <option value="Đang học">Đang học</option>
+                <option value="Đã tốt nghiệp">Đã tốt nghiệp</option>
+                <option value="Đã thôi học">Đã thôi học</option>
+                <option value="Tạm dừng học">Tạm dừng học</option>
+            </select>
+        </div>
+        <div>
+            <label for="student-course" class="block text-lg font-medium text-gray-700">Khóa</label>
+            <input type="text" id="student-course" placeholder="Nhập khóa"
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        <div>
+            <label for="student-program" class="block text-lg font-medium text-gray-700">Chương trình</label>
+            <input type="text" id="student-program" placeholder="Nhập chương trình học"
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        <div>
+            <label for="student-phone" class="block text-lg font-medium text-gray-700">Số điện thoại liên
+                hệ</label>
+            <input type="text" id="student-phone" placeholder="Nhập số điện thoại"
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        <div>
+            <label for="student-email" class="block text-lg font-medium text-gray-700">Email</label>
+            <input type="email" id="student-email" placeholder="Nhập email sinh viên"
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        <div class="md:col-span-2">
+            <label for="student-address" class="block text-lg font-medium text-gray-700">Địa chỉ</label>
+            <input type="text" id="student-address" placeholder="Nhập địa chỉ"
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        <div class="col-span-2 flex justify-end cursor-pointer">
+            <button type="submit"
+                class="bg-black text-white font-medium px-6 py-2 rounded-lg hover:bg-white hover:text-black border border-gray-300 transition duration-200">
+                Thêm sinh viên
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.getElementById('add-student-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const departmentSelect = document.getElementById('student-department');
+        const selectedDepartment = departmentSelect.options[departmentSelect.selectedIndex].textContent.trim();
+
+        const student = {
+            id: document.getElementById('student-id').value.trim(),
+            name: document.getElementById('student-name').value.trim(),
+            birthdate: document.getElementById('student-birthdate').value.trim(),
+            gender: document.getElementById('student-gender').value.trim(),
+            department: selectedDepartment,
+            status: document.getElementById('student-status').value.trim(),
+            email: document.getElementById('student-email').value.trim(),
+            phone: document.getElementById('student-phone').value.trim(),
+            course: document.getElementById('student-course').value.trim(),
+            program: document.getElementById('student-program').value.trim(),
+            address: document.getElementById('student-address').value.trim(),
+        };
+
+        let students = JSON.parse(localStorage.getItem('students')) || [];
+        students.push(student);
+        localStorage.setItem('students', JSON.stringify(students));
+
+        alert('Thêm sinh viên thành công!');
+        document.getElementById('add-student-form').reset();
+    });
+</script>

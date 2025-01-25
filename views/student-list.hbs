@@ -1,0 +1,292 @@
+<!-- Content -->
+<div class="bg-white p-8 rounded-lg shadow-md">
+    <h1 class="text-3xl font-semibold text-[#A78BFA] mb-6">Danh sách sinh viên</h1>
+
+    <!-- Thanh tìm kiếm -->
+    <div class="flex justify-end mb-4">
+        <input type="text" id="search-mssv" placeholder="Tìm kiếm theo MSSV"
+            class="border px-4 py-2 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="table-auto w-full border-collapse bg-white rounded-lg shadow-lg overflow-hidden">
+            <thead class="bg-gray-300 text-black">
+                <tr>
+                    <th class="px-3 py-2 text-[15px] font-medium">MSSV</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Họ và tên</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Ngày sinh</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Giới tính</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Khoa</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Trình trạng</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Email</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">SĐT</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Khóa</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Chương trình</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Địa chỉ</th>
+                    <th class="px-3 py-2 text-[15px] font-medium">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody id="student-table-body">
+                <!-- Dữ liệu sinh viên sẽ được tải vào đây -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal chỉnh sửa -->
+<div id="edit-modal" class="flex hidden fixed inset-0 bg-gray-800 bg-opacity-50 items-center justify-center">
+    <div class="bg-white rounded shadow-lg p-6 w-full max-w-4xl">
+        <h3 class="text-xl font-bold mb-4">Chỉnh sửa thông tin sinh viên</h3>
+        <form id="edit-student-form" class="grid grid-cols-2 gap-4">
+            <!-- Mã số sinh viên -->
+            <div>
+                <label for="edit-student-id" class="block font-medium">Mã số sinh viên</label>
+                <input type="text" id="edit-student-id" class="w-full border border-gray-300 rounded px-3 py-2"
+                    readonly>
+            </div>
+
+            <!-- Họ tên -->
+            <div>
+                <label for="edit-student-name" class="block font-medium">Họ tên</label>
+                <input type="text" id="edit-student-name" class="w-full border border-gray-300 rounded px-3 py-2"
+                    required>
+            </div>
+
+            <!-- Ngày tháng năm sinh -->
+            <div>
+                <label for="edit-student-birthdate" class="block font-medium">Ngày tháng năm sinh</label>
+                <input type="date" id="edit-student-birthdate" class="w-full border border-gray-300 rounded px-3 py-2">
+            </div>
+
+            <!-- Giới tính -->
+            <div>
+                <label for="edit-student-gender" class="block font-medium">Giới tính</label>
+                <select id="edit-student-gender" class="w-full border border-gray-300 rounded px-3 py-2" required>
+                    <option value="">Chọn</option>
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
+                    <option value="Khác">Khác</option>
+                </select>
+            </div>
+
+            <!-- Khoa -->
+            <div>
+                <label for="edit-student-department" class="block font-medium">Khoa</label>
+                <select id="edit-student-department" class="w-full border border-gray-300 rounded px-3 py-2" required>
+                    <option value="">Chọn</option>
+                    <option value="Khoa Luật">Khoa Luật</option>
+                    <option value="Khoa Tiếng Anh thương mại">Khoa Tiếng Anh thương mại</option>
+                    <option value="Khoa Tiếng Nhật">Khoa Tiếng Nhật</option>
+                    <option value="Khoa Tiếng Pháp">Khoa Tiếng Pháp</option>
+                </select>
+            </div>
+
+            <!-- Tình trạng -->
+            <div>
+                <label for="edit-student-status" class="block font-medium">Tình trạng sinh viên</label>
+                <select id="edit-student-status" class="w-full border border-gray-300 rounded px-3 py-2">
+                    <option value="">Chọn</option>
+                    <option value="Đang học">Đang học</option>
+                    <option value="Đã tốt nghiệp">Đã tốt nghiệp</option>
+                    <option value="Đã thôi học">Đã thôi học</option>
+                    <option value="Tạm dừng học">Tạm dừng học</option>
+                </select>
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label for="edit-student-email" class="block font-medium">Email</label>
+                <input type="email" id="edit-student-email" class="w-full border border-gray-300 rounded px-3 py-2"
+                    required>
+            </div>
+
+            <!-- Số điện thoại -->
+            <div>
+                <label for="edit-student-phone" class="block font-medium">Số điện thoại</label>
+                <input type="tel" id="edit-student-phone" class="w-full border border-gray-300 rounded px-3 py-2"
+                    required>
+            </div>
+
+            <!-- Khóa -->
+            <div>
+                <label for="edit-student-course" class="block font-medium">Khóa</label>
+                <input type="text" id="edit-student-course" class="w-full border border-gray-300 rounded px-3 py-2"
+                    placeholder="VD: K22">
+            </div>
+
+            <!-- Chương trình -->
+            <div>
+                <label for="edit-student-program" class="block font-medium">Chương trình</label>
+                <input type="text" id="edit-student-program" class="w-full border border-gray-300 rounded px-3 py-2"
+                    placeholder="VD: Chất lượng cao">
+            </div>
+
+            <!-- Địa chỉ -->
+            <div class="col-span-2">
+                <label for="edit-student-address" class="block font-medium">Địa chỉ</label>
+                <input type="text" id="edit-student-address" class="w-full border border-gray-300 rounded px-3 py-2"
+                    placeholder="Nhập địa chỉ sinh viên">
+            </div>
+
+            <div class="col-span-2 flex justify-end space-x-2">
+                <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+                    id="cancel-edit">Hủy</button>
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Cập nhật
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    const tableBody = document.getElementById('student-table-body');
+
+    // Load dữ liệu từ Local Storage và hiển thị
+    function loadFromLocalStorage() {
+        const students = JSON.parse(localStorage.getItem('students')) || [];
+        tableBody.innerHTML = ''; // Xóa nội dung cũ
+        students.forEach(student => addStudentRow(student));
+    }
+
+    // Thêm sinh viên vào bảng
+    function addStudentRow(student) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+                <td class="text-[13px] border px-3 py-2">${student.id}</td>
+                <td class="text-[13px] border px-3 py-2">${student.name}</td>
+                <td class="text-[13px] border px-3 py-2">${student.birthdate}</td>
+                <td class="text-[13px] border px-3 py-2">${student.gender}</td>
+                <td class="text-[13px] border px-3 py-2">${student.department}</td>
+                <td class="text-[13px] border px-3 py-2">${student.status}</td>
+                <td class="text-[13px] border px-3 py-2">${student.email}</td>
+                <td class="text-[13px] border px-3 py-2">${student.phone}</td>
+                <td class="text-[13px] border px-3 py-2">${student.course}</td>
+                <td class="text-[13px] border px-3 py-2">${student.program}</td>
+                <td class="text-[13px] border px-3 py-2">${student.address}</td>
+                <td class="text-[13px] border px-3 py-2 text-center" style="width: 120px;">
+                    <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600" onclick="editStudentRow(this)">Sửa</button>
+                    <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600" onclick="deleteStudentRow(this)">Xóa</button>
+                </td>
+            `;
+        tableBody.appendChild(row);
+    }
+
+    // Xóa sinh viên khỏi bảng
+    function deleteStudentRow(button) {
+        const row = button.parentElement.parentElement;
+        row.remove();
+        saveToLocalStorage();
+    }
+
+    // Hiển thị modal chỉnh sửa với dữ liệu gốc
+    function editStudentRow(button) {
+        const row = button.parentElement.parentElement;
+        const student = {
+            id: row.children[0].textContent.trim(),
+            name: row.children[1].textContent.trim(),
+            birthdate: row.children[2].textContent.trim(),
+            gender: row.children[3].textContent.trim(),
+            department: row.children[4].textContent.trim(),
+            status: row.children[5].textContent.trim(),
+            email: row.children[6].textContent.trim(),
+            phone: row.children[7].textContent.trim(),
+            course: row.children[8].textContent.trim(),
+            program: row.children[9].textContent.trim(),
+            address: row.children[10].textContent.trim(),
+        };
+
+        // Điền dữ liệu vào các trường trong modal
+        document.getElementById('edit-student-id').value = student.id;
+        document.getElementById('edit-student-name').value = student.name;
+        document.getElementById('edit-student-birthdate').value = student.birthdate;
+        document.getElementById('edit-student-gender').value = student.gender;
+        document.getElementById('edit-student-department').value = student.department;
+        document.getElementById('edit-student-status').value = student.status;
+        document.getElementById('edit-student-email').value = student.email;
+        document.getElementById('edit-student-phone').value = student.phone;
+        document.getElementById('edit-student-course').value = student.course;
+        document.getElementById('edit-student-program').value = student.program;
+        document.getElementById('edit-student-address').value = student.address;
+
+        // Hiển thị modal
+        document.getElementById('edit-modal').classList.remove('hidden');
+    }
+
+    // Lưu chỉnh sửa sau khi cập nhật
+    document.getElementById('edit-student-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const id = document.getElementById('edit-student-id').value;
+        const name = document.getElementById('edit-student-name').value;
+        const birthdate = document.getElementById('edit-student-birthdate').value;
+        const gender = document.getElementById('edit-student-gender').value;
+        const department = document.getElementById('edit-student-department').value;
+        const status = document.getElementById('edit-student-status').value;
+        const email = document.getElementById('edit-student-email').value;
+        const phone = document.getElementById('edit-student-phone').value;
+        const course = document.getElementById('edit-student-course').value;
+        const program = document.getElementById('edit-student-program').value;
+        const address = document.getElementById('edit-student-address').value;
+
+        // Cập nhật dòng trong bảng
+        Array.from(tableBody.children).forEach(row => {
+            if (row.children[0].textContent === id) {
+                row.children[1].textContent = name;
+                row.children[2].textContent = birthdate;
+                row.children[3].textContent = gender;
+                row.children[4].textContent = department;
+                row.children[5].textContent = status;
+                row.children[6].textContent = email;
+                row.children[7].textContent = phone;
+                row.children[8].textContent = course;
+                row.children[9].textContent = program;
+                row.children[10].textContent = address;
+            }
+        });
+
+        // Lưu vào Local Storage
+        saveToLocalStorage();
+        document.getElementById('edit-modal').classList.add('hidden');
+    });
+
+    // Đóng modal chỉnh sửa
+    document.getElementById('cancel-edit').addEventListener('click', function () {
+        document.getElementById('edit-modal').classList.add('hidden');
+    });
+
+    // Lưu lại dữ liệu vào Local Storage
+    function saveToLocalStorage() {
+        const students = Array.from(tableBody.children).map(row => ({
+            id: row.children[0].textContent,
+            name: row.children[1].textContent,
+            birthdate: row.children[2].textContent,
+            gender: row.children[3].textContent,
+            department: row.children[4].textContent,
+            status: row.children[5].textContent,
+            email: row.children[6].textContent,
+            phone: row.children[7].textContent,
+            course: row.children[8].textContent,
+            program: row.children[9].textContent,
+            address: row.children[10].textContent,
+        }));
+        localStorage.setItem('students', JSON.stringify(students));
+    }
+
+    // Lọc danh sách sinh viên theo MSSV
+    document.getElementById('search-mssv').addEventListener('input', function () {
+        const searchValue = this.value.toLowerCase();
+        Array.from(tableBody.children).forEach(row => {
+            const studentId = row.children[0].textContent.toLowerCase();
+            if (studentId.includes(searchValue)) {
+                row.style.display = ''; // Hiển thị nếu MSSV khớp
+            } else {
+                row.style.display = 'none'; // Ẩn nếu MSSV không khớp
+            }
+        });
+    });
+
+
+    // Tải dữ liệu ban đầu
+    window.onload = loadFromLocalStorage;
+</script>
